@@ -14,4 +14,8 @@ object S2GeometryFunctions extends WithHelper {
     S2CellIdToLatLon(col1.expr)
   }
 
+  def s2NearestCenter(col1: Column, col2: Column, col3: Column): Column = withExpr {
+    S2NearestCenter(col1.expr, col2.expr, col3.expr)
+  }
+
 }

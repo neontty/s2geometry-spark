@@ -12,7 +12,7 @@ Thank you for your work.
 
 ## using in pyspark
 
-To call the function registrator to use functions in SQL:
+To call the function registrator from pyspark to use functions in SQL:
 `spark._jvm.com.google.common.geometry.spark.S2GeometryFunctionRegistration.registerFunctions(spark._jsparkSession)`
 
 
