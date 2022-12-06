@@ -8,3 +8,11 @@ project structure and spark infrastructure code is being borrowed heavily from:
 - mrpowers/bebe
 
 Thank you for your work.
+
+
+## using in pyspark
+
+To call the function registrator to use functions in SQL:
+`spark._jvm.com.google.common.geometry.spark.S2GeometryFunctionRegistration.registerFunctions(spark._jsparkSession)`
+
+

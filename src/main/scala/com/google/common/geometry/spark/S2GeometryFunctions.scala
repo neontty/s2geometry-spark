@@ -10,4 +10,8 @@ object S2GeometryFunctions extends WithHelper {
     S2LatLonToCellId(col1.expr, col2.expr, col3.expr)
   }
 
+  def s2CellIdToLatLon(col1: Column): Column = withExpr {
+    S2CellIdToLatLon(col1.expr)
+  }
+
 }

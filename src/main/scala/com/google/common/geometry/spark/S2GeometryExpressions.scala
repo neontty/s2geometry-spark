@@ -1,9 +1,10 @@
 package com.google.common.geometry.spark
 
 import com.google.common.geometry.{S2CellId, S2LatLng}
+import org.apache.spark.sql.catalyst.InternalRow
 import org.apache.spark.sql.catalyst.expressions._
 import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, ExprCode}
-import org.apache.spark.sql.types.{ByteType, DataType, DoubleType, LongType, IntegerType}
+import org.apache.spark.sql.types._
 
 @ExpressionDescription(
   usage = "_FUNC_(latitude_degrees, longitude_degrees, s2_level) - " +
@@ -34,8 +35,7 @@ case class S2LatLonToCellId(lat: Expression, lon: Expression, s2Level: Expressio
 
   override protected def doGenCode(ctx: CodegenContext, ev: ExprCode): ExprCode = {
     nullSafeCodeGen(ctx, ev, (la, lo, le) => {
-      //val a =  S2GeometryFunctions.getClass.getCanonicalName.asInstanceOf[String]
-      s"""${ev.value} = S2CellId.fromLatLng(S2LatLng.fromDegrees($la, $lo)).parent($le).id();"""
+      s"""${ev.value} = com.google.common.geometry.spark.S2LatLonToCellId($la, $lo, $le)"""
     })
   }
 
@@ -45,5 +45,48 @@ case class S2LatLonToCellId(lat: Expression, lon: Expression, s2Level: Expressio
                                                  newSecond: Expression,
                                                  newThird: Expression): S2LatLonToCellId =
     copy(lat = newFirst, lon = newSecond, s2Level = newThird)
+}
+
+
+@ExpressionDescription(
+  usage = "_FUNC_(cell_id) - " +
+    "Returns the lat/lon pair for the center of a s2 cell",
+  examples =
+    """
+    Examples:
+      > SELECT _FUNC_(1224917869591003136) as s2_cell_center;
+       (10.101848678309088, 11.195717211533564)
+  """,
+  group = "s2geometry_funcs",
+  since = "3.3.1")
+case class S2CellIdToLatLon(child: Expression)
+  extends UnaryExpression with ImplicitCastInputTypes with NullIntolerant {
+
+  override def inputTypes: Seq[DataType] = Seq(LongType, ShortType, IntegerType, ByteType)
+
+  override def dataType: DataType = StructType(
+    Seq(
+      StructField("lat", DoubleType, false),
+      StructField("lon", DoubleType, false),
+    )
+  )
+
+  override def nullSafeEval(input: Any): Any = {
+    val cell = new S2CellId(input.asInstanceOf[Long])
+    val ll = cell.toLatLng()
+    InternalRow(ll.latDegrees(), ll.lngDegrees())
+  }
+
+  override def prettyName: String = "s2_cell_id_to_lat_lon"
+
+  override protected def withNewChildInternal(newChild: Expression): S2CellIdToLatLon =
+    copy(child = newChild)
+
+  override protected def doGenCode(ctx: CodegenContext, ev: ExprCode): ExprCode = {
+    nullSafeCodeGen(ctx, ev, (cid) => {
+      s"""${ev.value} = com.google.common.geometry.spark.S2CellIdToLatLon($cid)"""
+    })
+  }
+
 }
 

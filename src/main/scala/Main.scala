@@ -34,9 +34,14 @@ object Main {
     S2GeometryFunctionRegistration.registerFunctions(spark)
 
     df.createOrReplaceTempView("some_table")
-    val df2 = spark.sql("SELECT *, s2_lat_lon_to_cell_id(lat1, lon1, lvl1) as cellid2 from some_table")
 
+    val df2 = spark.sql("SELECT *, s2_lat_lon_to_cell_id(lat1, lon1, lvl1) as cellid2 from some_table")
     println(df2.show())
+
+
+    val df3 = spark.sql("SELECT *, s2_cell_id_to_lat_lon(s2cell) as cell_centers from some_table")
+    println(df3.show())
+
 
     spark.stop()
 

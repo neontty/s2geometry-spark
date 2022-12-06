@@ -7,6 +7,7 @@ object S2GeometryFunctionRegistration extends NativeFunctionRegistration{
 
   val expressions: Map[String, (ExpressionInfo, FunctionBuilder)] = Map(
     expression[S2LatLonToCellId]("s2_lat_lon_to_cell_id"),
+    expression[S2CellIdToLatLon]("s2_cell_id_to_lat_lon"),
     // TODO add more
   )
 }
