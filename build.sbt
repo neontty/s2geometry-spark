@@ -6,7 +6,7 @@ libraryDependencies += "com.swoop" %% "spark-alchemy" % "1.2.1"
 
 name := "s2geometry-spark"
 
-version := "0.2.0"
+version := "0.3.0"
 
 scalaVersion := "2.12.17"
 
