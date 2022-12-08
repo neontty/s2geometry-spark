@@ -1,4 +1,4 @@
-package com.google.common.geometry.spark
+package io.github.neontty.s2geometry.spark
 
 import com.google.common.geometry.{S2CellId, S2LatLng}
 import org.apache.spark.sql.catalyst.InternalRow
@@ -128,6 +128,9 @@ case class S2NearestCenter(lat: Expression, lon: Expression, s2Level: Expression
   override protected def doGenCode(ctx: CodegenContext, ev: ExprCode): ExprCode = {
     val expr = ctx.addReferenceObj("this", this)
     defineCodeGen(ctx, ev, (la, lo, le) =>
+      //TODO this is probably not how we're supposed to be doing "doGenCode"... See if we can have this calling
+      // actual java code for s2 functions instead of 'this' ref. was close earlier but couldn't figure out
+      // how to get return type. maybe ${boxedType(dataType)} is the key.
       s"(${boxedType(dataType)})$expr.nullSafeEval($la, $lo, $le)")
   }
 

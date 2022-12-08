@@ -1,4 +1,4 @@
-package com.google.common.geometry.spark
+package io.github.neontty.s2geometry.spark
 
 import org.apache.spark.sql.catalyst.expressions.Expression
 import org.apache.spark.sql.Column

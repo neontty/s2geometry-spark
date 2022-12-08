@@ -1,7 +1,8 @@
 
-package com.google.common.geometry.spark
+package io.github.neontty.s2geometry.spark
 
-import com.google.common.geometry.spark.S2GeometryFunctions.s2LatLonToCellId
+import io.github.neontty.s2geometry.spark.S2GeometryFunctionRegistration
+import io.github.neontty.s2geometry.spark.S2GeometryFunctions.s2LatLonToCellId
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.col
 
@@ -41,7 +42,6 @@ object Main {
 
     val df3 = spark.sql("SELECT *, s2_cell_id_to_lat_lon(s2cell) as cell_centers from some_table")
     println(df3.show())
-
 
     spark.stop()
 

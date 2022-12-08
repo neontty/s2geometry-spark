@@ -1,4 +1,4 @@
-package com.google.common.geometry.spark
+package io.github.neontty.s2geometry.spark
 
 import com.swoop.alchemy.spark.expressions.NativeFunctionRegistration
 import org.apache.spark.sql.catalyst.expressions.ExpressionInfo
