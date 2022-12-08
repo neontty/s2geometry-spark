@@ -1,7 +1,6 @@
 
 package io.github.neontty.s2geometry.spark
 
-import io.github.neontty.s2geometry.spark.S2GeometryFunctionRegistration
 import io.github.neontty.s2geometry.spark.S2GeometryFunctions.s2LatLonToCellId
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.col
