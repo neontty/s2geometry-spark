@@ -8,5 +8,5 @@ name := "s2geometry-spark"
 
 version := "0.2.0"
 
-scalaVersion := "2.12"
+scalaVersion := "2.12.17"
 
