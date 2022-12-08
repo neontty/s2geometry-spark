@@ -3,8 +3,8 @@ ThisBuild / organizationName := "neontty"
 
 ThisBuild / scmInfo := Some(
   ScmInfo(
-    url("https://github.com/awwsmm/zepto"),
-    "scm:git@github.com:awwsmm/zepto.git"
+    url("https://github.com/neontty/s2geometry-spark"),
+    "scm:git@github.com:neontty/s2geometry-spark.git"
   )
 )
 
